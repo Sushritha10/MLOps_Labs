@@ -1,0 +1,15 @@
+# Virtual environment
+lab1_env/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Pytest cache
+.pytest_cache/
+
+# VS Code settings
+.vscode/
+
+# macOS system files
+.DS_Store
