@@ -1,35 +1,76 @@
 # MLOps Labs Repository
 
-Name: Sushritha Bharadwaj  
-Course: MLOps  
+**Name:** Sushritha Bharadwaj  
+**Course:** MLOps  
 
-This repository contains lab assignments for the MLOps course.
-
----
-
-## Structure
-
-- Lab1: Statistics utilities, testing, CI/CD
-- Lab2: Airflow-based machine learning pipeline (customized)
-- airflow_local: Local Airflow setup using Docker
+This repository contains lab assignments and projects developed for the MLOps course, focusing on machine learning systems, automation, and deployment.
 
 ---
 
-## Lab2 Summary
+## Repository Structure
 
-Lab2 implements an automated ML pipeline using Apache Airflow.
+- **Lab1/** – Statistics utilities, testing, and CI/CD workflows  
+- **Lab2/** – Machine learning pipeline (data processing, clustering, modeling)  
+- **dags/** – Apache Airflow DAG definitions  
+- **airflow_local/** – Local Airflow setup using Docker and Docker Compose  
+- **logs/** – Airflow logs and pipeline artifacts (mounted from container)
 
-Features:
+---
+
+## Lab1 Overview: Foundations & CI/CD
+
+Lab1 focuses on building strong foundations for reliable machine learning systems.
+
+### Features
+- Statistical analysis utilities
+- Data validation and testing
+- Unit tests with PyTest
+- Continuous Integration using GitHub Actions
+- Code quality checks
+- Reproducible experiment workflows
+
+### Purpose
+Establishes best practices for:
+- Testing ML code
+- Preventing data leakage
+- Ensuring pipeline reliability
+- Maintaining production-ready standards
+
+---
+
+## Lab2 Overview: Automated ML Pipeline with Airflow
+
+Lab2 implements an automated machine learning pipeline using **Apache Airflow** and **Docker**.
+
+### Features
 - External dataset integration
-- Data preprocessing with scaling
+- Data preprocessing with feature scaling
 - KMeans clustering with elbow method
+- Automatic selection of optimal k
 - Model and scaler persistence
-- Consistent inference pipeline
-- Docker-based Airflow deployment
+- Reusable inference pipeline
+- Containerized Airflow environment
+
+### Purpose
+Demonstrates end-to-end MLOps workflows including:
+- Pipeline orchestration
+- Model training automation
+- Versioned artifacts
+- Reproducible execution
+- Local containerized deployment
 
 ---
 
-## Run Lab2 (Local Test)
+## Running Lab2 with Airflow (Recommended)
+
+### Prerequisites
+- Docker Desktop
+- Docker Compose v2
+
+### Start Airflow
+
+From the project root:
 
 ```bash
-python -c "from Lab2.src.lab import load_data, data_preprocessing, build_save_model, load_model_elbow; a=load_data(); b=data_preprocessing(a); c=build_save_model(b,'model.sav'); print('Prediction:', load_model_elbow('model.sav', c))"
+cd airflow_local
+docker compose -f docker-compose.yaml up --build
