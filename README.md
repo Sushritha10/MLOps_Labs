@@ -3,14 +3,15 @@
 **Name:** Sushritha Bharadwaj  
 **Course:** MLOps  
 
-This repository contains lab assignments and projects developed for the MLOps course, focusing on machine learning systems, automation, and deployment.
+This repository contains lab assignments and projects developed for the MLOps course, focusing on machine learning systems, automation, orchestration, and reproducible pipelines.
 
 ---
 
 ## Repository Structure
 
 - **Lab1/** – Statistics utilities, testing, and CI/CD workflows  
-- **Lab2/** – Machine learning pipeline (data processing, clustering, modeling)  
+- **Lab2/** – Automated ML pipeline with Airflow (data processing + clustering + modeling)  
+- **Lab3/** – Advertising **Sales prediction** pipeline (regression, tuning, reproducibility)  
 - **dags/** – Apache Airflow DAG definitions  
 - **airflow_local/** – Local Airflow setup using Docker and Docker Compose  
 - **logs/** – Airflow logs and pipeline artifacts (mounted from container)
@@ -61,16 +62,35 @@ Demonstrates end-to-end MLOps workflows including:
 
 ---
 
-## Running Lab2 with Airflow (Recommended)
+## Lab3 Overview: Advertising Sales Prediction (Regression)
 
-### Prerequisites
-- Docker Desktop
-- Docker Compose v2
+Lab3 builds a clean, reproducible **regression** pipeline to predict **Sales** from advertising spend using the dataset with columns:
 
-### Start Airflow
+- `TV`, `Radio`, `Newspaper` → features  
+- `Sales` → target
 
-From the project root:
+### What I changed / added (to ensure it’s not identical to the base repo)
+- **Changed the task** to regression (Sales prediction) using the advertising spend dataset
+- Implemented a full **scikit-learn Pipeline** to ensure consistent preprocessing + training:
+  - `ColumnTransformer` + `StandardScaler` for numeric feature scaling
+  - Model step using **Ridge Regression**
+- Added **GridSearchCV** hyperparameter tuning:
+  - tuned `alpha` for Ridge regression
+  - cross-validated scoring using **R²**
+- Added evaluation metrics for model quality:
+  - **RMSE** (computed from MSE for compatibility)
+  - **R² score**
+- Saved the **entire pipeline artifact** (preprocessing + model together) so inference matches training exactly:
+  - `model/sales_model.pkl`
+- Added a standalone **prediction script** that loads the saved pipeline and produces predictions for a provided CSV file
+
+### How to run Lab3
+From the repository root:
 
 ```bash
-cd airflow_local
-docker compose -f docker-compose.yaml up --build
+cd Lab3
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python src/train.py
+python src/predict.py data/advertising.csv
