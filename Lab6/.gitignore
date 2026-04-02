@@ -1,0 +1,6 @@
+lab1_env/
+__pycache__/
+.pytest_cache/
+.vscode/
+.DS_Store
+logs/
