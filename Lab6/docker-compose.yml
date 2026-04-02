@@ -1,6 +1,0 @@
-services:
-  wine-classifier:
-    build: .
-    ports:
-      - "5001:5000"
-    container_name: wine_classifier_app

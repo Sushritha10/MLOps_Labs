@@ -1,5 +1,0 @@
-apache-airflow==2.8.4
-
-pandas
-scikit-learn
-kneed
